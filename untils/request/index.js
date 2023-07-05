@@ -9,7 +9,8 @@ import Request from "./request";
 
 // 请求路径
 
-var baseUrl = "http://localhost:3000";
+// var baseUrl = "http://localhost:3000";
+var baseUrl = "https:www.gzamon.wang/api";
 // #ifdef APP-PLUS || MP-WEIXIN
 // baseUrl = "http://122.51.183.19";
 // #endif

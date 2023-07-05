@@ -9687,6 +9687,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.apiGetBanner = apiGetBanner;
+exports.apiGetRecommendSongs = apiGetRecommendSongs;
 var _request = _interopRequireDefault(__webpack_require__(/*! ../untils/request */ 41));
 function apiGetBanner(data) {
   return _request.default.request({
@@ -9694,6 +9695,16 @@ function apiGetBanner(data) {
     method: "GET",
     data: data,
     authType: "None"
+  });
+}
+
+// 获取推荐歌单
+function apiGetRecommendSongs(data) {
+  return _request.default.request({
+    url: "/personalized",
+    method: "GET",
+    data: data,
+    authType: 'None'
   });
 }
 
@@ -9725,7 +9736,8 @@ var _request = _interopRequireDefault(__webpack_require__(/*! ./request */ 45));
 
 // 请求路径
 
-var baseUrl = "http://localhost:3000";
+// var baseUrl = "http://localhost:3000";
+var baseUrl = "https:www.gzamon.wang/api";
 
 // baseUrl = "http://122.51.183.19";
 

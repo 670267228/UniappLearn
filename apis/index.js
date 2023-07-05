@@ -9,5 +9,16 @@ export function apiGetBanner(data) {
   });
 }
 
+// 获取推荐歌单
+export function apiGetRecommendSongs(data){
+	return req.request({
+		url:"/personalized",
+		method:"GET",
+		data,
+		authType:'None'
+	})
+	
+}
+
 
 

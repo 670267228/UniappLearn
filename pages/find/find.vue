@@ -23,12 +23,26 @@
 		<view>
 			<song-list title="推荐歌单" link="test?id=123" :list="recommendSongs"></song-list>
 		</view>
+		<!-- 歌单分类块 -->
+		<view class="song-list">
+			<view class="switch-line flex-box">
+				<view class="switch-item">
+
+				</view>
+				<view class="switch-item">
+
+				</view>
+
+			</view>
+
+		</view>
 	</view>
 </template>
 
 <script>
 	import {
-		apiGetBanner
+		apiGetBanner,
+		apiGetRecommendSongs
 	} from "@/apis/index";
 	import songList from "../../component/songList.vue";
 
@@ -62,8 +76,9 @@
 		},
 
 		onLoad() {
-			this.getBanner()
-			this.curDate = new Date().getDate()
+			this.getBanner(),
+				this.getRecommendSongs(),
+				this.curDate = new Date().getDate()
 		},
 		methods: {
 			// 获取轮播图
@@ -90,6 +105,13 @@
 					this.swiper = res.banners
 				})
 
+			},
+			// 获取推荐歌单
+			getRecommendSongs() {
+				apiGetRecommendSongs().then(res => {
+					console.log("RecommendSongs", res)
+					this.recommendSongs = res.result
+				})
 			}
 		}
 	}
