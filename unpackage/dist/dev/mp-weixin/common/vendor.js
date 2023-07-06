@@ -9688,6 +9688,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.apiGetBanner = apiGetBanner;
 exports.apiGetRecommendSongs = apiGetRecommendSongs;
+exports.apiGetTopAlbum = apiGetTopAlbum;
 var _request = _interopRequireDefault(__webpack_require__(/*! ../untils/request */ 41));
 function apiGetBanner(data) {
   return _request.default.request({
@@ -9705,6 +9706,16 @@ function apiGetRecommendSongs(data) {
     method: "GET",
     data: data,
     authType: 'None'
+  });
+}
+
+// 获取新碟
+function apiGetTopAlbum(data) {
+  return _request.default.request({
+    url: "/album/newest",
+    method: "GET",
+    data: data,
+    authType: "None"
   });
 }
 

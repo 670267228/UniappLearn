@@ -185,6 +185,24 @@ var _songList = _interopRequireDefault(__webpack_require__(/*! ../../component/s
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default = {
   components: {
     songList: _songList.default
@@ -205,11 +223,15 @@ var _default = {
         name: "直播"
       }],
       curDate: '',
-      recommendSongs: []
+      recommendSongs: [],
+      newType: 1,
+      //新歌新碟
+      lastestAlubm: [],
+      lastestTempAlbum: []
     };
   },
   onLoad: function onLoad() {
-    this.getBanner(), this.getRecommendSongs(), this.curDate = new Date().getDate();
+    this.getBanner(), this.getRecommendSongs(), this.getLastestAlbum(), this.curDate = new Date().getDate();
   },
   methods: {
     // 获取轮播图
@@ -241,6 +263,24 @@ var _default = {
       (0, _index.apiGetRecommendSongs)().then(function (res) {
         console.log("RecommendSongs", res);
         _this2.recommendSongs = res.result;
+      });
+    },
+    // 切换新碟新歌
+    switchTab: function switchTab(type) {
+      this.newType = type;
+      var temp = {
+        s: type == 1 ? 0 : 3,
+        e: type == 1 ? 3 : 6
+      };
+      this.lastestAlubm = this.lastestTempAlbum.slice(temp.s, temp.e);
+    },
+    // 获取新碟
+    getLastestAlbum: function getLastestAlbum() {
+      var _this3 = this;
+      (0, _index.apiGetTopAlbum)().then(function (res) {
+        _this3.lastestTempAlbum = res.albums;
+        console.log(res);
+        _this3.lastestAlubm = res.albums.slice(0, 3);
       });
     }
   }

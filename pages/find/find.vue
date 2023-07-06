@@ -26,23 +26,42 @@
 		<!-- 歌单分类块 -->
 		<view class="song-list">
 			<view class="switch-line flex-box">
-				<view class="switch-item">
-
+				<view class="flex-box">
+					<view class="switch-item" :class="{on:newType == 1}" @click="switchTab(1)">新碟</view>
+					<view class="switch-item" :class="{on:newType == 2}" @click="switchTab(2)">新歌</view>
 				</view>
-				<view class="switch-item">
-
-				</view>
-
+				<template v-if="newType==1">
+					<view class="more">
+						更多新碟
+					</view>
+				</template>
+				<template v-if="newType==2">
+					<view class="more">
+						新歌推荐
+					</view>
+				</template>
 			</view>
-
+			<scroll-view class="scroll-view" scroll-x="true">
+				<view v-for="(item,index) in lastestAlubm" :key="index">
+					<image :src="item.picUrl + $imgSuffix" class="img"></image>
+					<view class="desc ellipsis">
+						{{item.name}}
+					</view>
+					<view class="desc ellipsis c9">
+						{{item.artist.name}}
+					</view>
+				</view>
+			</scroll-view>
 		</view>
+		<!--  -->
 	</view>
 </template>
 
 <script>
 	import {
 		apiGetBanner,
-		apiGetRecommendSongs
+		apiGetRecommendSongs,
+		apiGetTopAlbum,
 	} from "@/apis/index";
 	import songList from "../../component/songList.vue";
 
@@ -71,14 +90,18 @@
 					},
 				],
 				curDate: '',
-				recommendSongs: []
+				recommendSongs: [],
+				newType: 1, //新歌新碟
+				lastestAlubm: [],
+				lastestTempAlbum: [],
 			};
 		},
 
 		onLoad() {
 			this.getBanner(),
-				this.getRecommendSongs(),
-				this.curDate = new Date().getDate()
+			this.getRecommendSongs(),
+			this.getLastestAlbum(),	
+			this.curDate = new Date().getDate()
 		},
 		methods: {
 			// 获取轮播图
@@ -111,6 +134,24 @@
 				apiGetRecommendSongs().then(res => {
 					console.log("RecommendSongs", res)
 					this.recommendSongs = res.result
+				})
+			},
+			// 切换新碟新歌
+			switchTab(type) {
+				this.newType = type
+				let temp = {
+					s: type == 1 ? 0 : 3,
+					e: type == 1 ? 3 : 6
+				}
+				this.lastestAlubm = this.lastestTempAlbum.slice(temp.s, temp.e)
+			},
+
+			// 获取新碟
+			getLastestAlbum() {
+				apiGetTopAlbum().then(res => {
+					this.lastestTempAlbum = res.albums;
+					console.log(res)
+					this.lastestAlubm = res.albums.slice(0, 3);
 				})
 			}
 		}
